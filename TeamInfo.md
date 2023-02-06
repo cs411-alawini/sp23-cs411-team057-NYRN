@@ -95,6 +95,7 @@ While the applicability may seem insignificant at first glance, this is a large 
 (uploaded seperately)
 
 **Project Distribution:**
+
 (Subject to change during course of semester)
 
 
