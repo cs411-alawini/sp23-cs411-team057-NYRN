@@ -41,7 +41,7 @@ Game Finder, will use the “Steam Game” dataset. The dataset itself includes 
 
 
 The specific dataset can be found at games-features.
-Link:https://docs.google.com/spreadsheets/d/1m10Zkm07WIkGzwi36it0g4Fkuw5xx5Q68hCinRHxIx8/edit#gid=1578928233 
+Link: https://docs.google.com/spreadsheets/d/1m10Zkm07WIkGzwi36it0g4Fkuw5xx5Q68hCinRHxIx8/edit#gid=1578928233 
 
 
 With this database, we plan to highlight different features of games currently available on the Steam platform. 
