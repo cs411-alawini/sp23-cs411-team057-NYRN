@@ -25,17 +25,17 @@
 
 ## Project Summary
 
-###Project Title: GameFinder
+**Project Title: GameFinder**
 
-#Project Summary:
+**Project Summary:**
 
 Our video game search engine, GameFinder, is designed to help users find the perfect game for their preferences and computer specifications. With GameFinder, users can input specific characteristics they are looking for in a game, such as genre, setting, or playstyle, and their computer specs, such as graphics card and RAM. The search engine will then generate a catalog of games that match the user's criteria, ensuring that they find a game that not only fits their interests but also runs smoothly on their computer. Whether you're looking for a fast-paced action game or a relaxing puzzle game, GameFinder has you covered. Say goodbye to endless scrolling through game listings and hello to a tailored, efficient search experience. It’s always game time. 
 
-#Description:
+**Description:**
 
 Our video game search engine, GameFinder, aims to solve the problem of finding the right game for a player's preferences and computer specifications. With the increasing number of video games being released every year, it can be overwhelming for players to sift through all the options and find a game that suits their interests and runs smoothly on their computer. GameFinder streamlines this process by allowing players to input specific characteristics they are looking for in a game and their computer specifications, and then generating a catalog of games that match their criteria. The result is a personalized and efficient search experience, making it easier for players to find the perfect game for them. Our goal is to provide a convenient solution for players who want to enjoy the latest games without having to spend hours searching for the right one.
 
-#Details About Data:
+**Details About Data:**
 
 Game Finder, will use the “Steam Game” dataset. The dataset itself includes 78 columns with different information about games within the Steam platform. These features range from release dates to specific specs about the game. The dataset also includes 13,358 entries. These entries contain the various games on Steam that can be downloaded/ played.
 
@@ -45,7 +45,8 @@ Link:https://docs.google.com/spreadsheets/d/1m10Zkm07WIkGzwi36it0g4Fkuw5xx5Q68hC
 
 
 With this database, we plan to highlight different features of games currently available on the Steam platform. 
-Detailed Functionalities:
+
+**Detailed Functionalities:**
 
 
 Filtering games based on provided preferences: 
@@ -74,7 +75,7 @@ Guest: For users only interested in one or two time uses on our web application,
 
 
 
-#Real-World Applicability
+**Real-World Applicability:**
 
 The original dataset for the Steam Game dataset is located at https://data.world/craigkelly/steam-game-data, which is a “combination of data from publicly available Steam API's and steamspy.com”. 
 From the about page of steamspy.com, we learned that “Steam Spy automatically gathers data from Steam user profiles”. Based on the methods described in the post (https://arstechnica.com/gaming/2014/04/introducing-steam-gauge-ars-reveals-steams-most-popular-games/), we learned that all these data comes from real life steam users. 
@@ -82,7 +83,7 @@ From the about page of steamspy.com, we learned that “Steam Spy automatically 
 Our web application, GameFinder, builds on the concepts built in this data set by adding an analyzation tool. More specifically, many of the functionalities of our application revolve around providing our users curated information from the larger dataset. Whether that be games they can play on their machine or games of genres they more closely relate to, it adds a seamless connection between the raw set of games on Steam and the platform Steam itself where users can download games but may not have the best insight on. 
 
 
-#Creative Component:
+**Creative Component:**
 Having a subpar computer/ laptop can often turn people away from playing a certain game. In fact, in recent years, it has become more standardized for people who enjoy playing games to buy more and more expensive equipment to run the games they most enjoy playing. While this is a nice luxury for some with higher recreational budgets, it leaves others behind. One creative component that we hope to add to our web application is a small survey set that allows users to input specs about their computer. Our web application will use this data and compare it against games on Steam that support their specific specs and return those. We plan to achieve this by adding key specs that games often do or do not support and inputting those into game availability.
 
 
@@ -91,11 +92,11 @@ While the applicability may seem insignificant at first glance, this is a large 
 
 
 
-#Low-Fidelity UI Mockup:
+**Low-Fidelity UI Mockup:**
 
 (uploaded seperately)
 
-#Project Distribution
+**Project Distribution:**
 (Subject to change during course of semester)
 
 
