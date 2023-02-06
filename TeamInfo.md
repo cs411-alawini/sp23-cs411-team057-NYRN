@@ -107,8 +107,13 @@ Sam Yue Chen: Database programming in SQL (triggers, selecting relevant  data, e
 
 Navin Ranganathan: Developing the backend of the web application, organizing all the specifications for helping users find their games. 
 
+Nimish Mathur: Helping implement the search feature of our web app, allowing users to type in their game name or other keywords to streamline the users’ search process.
 
-Nimish Mathur: Helping implement the search feature of our web app, allowing users to type in their game name of other keywords to streamline the users’ search process
+
+Other Notes: Our team has made a group chat and use that as our prime way of communication. We also have implemented checks to help keep each other on schedule for deadlines. This has been worked out so Rahul and Nimish have more overlap with the work related to user interface. Same goes for Navin and Sam who have more support with each other for the back-end. 
+
+
+With these two sets, we hope to have code reviews with the other as a reviewer to make sure all code pushed works as intended!
 
 
 
