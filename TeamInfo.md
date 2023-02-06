@@ -64,9 +64,12 @@ After users create their own query, we should display the games in a list. And o
 
 
 The web application will also have 3-key user interfaces:
-Super User: Similar to an admin user, this will be a user who has many capabilities. Simple functions that they have will include adding/ deleting games that are no longer available on Steam. Their more complex capabilities include being able to look at registered users. This interface will allow them to see information about the user and allow them to delete inactive users.
-Registered User: Registered users will be referred to as individuals who create an account using our web application. This will allow for users to save preferences about games they enjoy, star those of interest to them, and more complexly save inputs regarding the specs of their computer. This will allow them to more easily “pick-up where they left off” and scroll through games of interest to them. This will be done using filters of game release dates, genre, et cetera.
-Guest: For users only interested in one or two time uses on our web application, this mode offers all the same functionalities and capabilities of a registered user but without saved memory. This essentially means users inputting specs about their laptops won’t be saved if they refresh the page or come back to the site later. Similarly, they would not be able to favorite games of interest. 
+
+- Super User: Similar to an admin user, this will be a user who has many capabilities. Simple functions that they have will include adding/ deleting games that are no longer available on Steam. Their more complex capabilities include being able to look at registered users. This interface will allow them to see information about the user and allow them to delete inactive users.
+
+- Registered User: Registered users will be referred to as individuals who create an account using our web application. This will allow for users to save preferences about games they enjoy, star those of interest to them, and more complexly save inputs regarding the specs of their computer. This will allow them to more easily “pick-up where they left off” and scroll through games of interest to them. This will be done using filters of game release dates, genre, et cetera.
+
+- Guest: For users only interested in one or two time uses on our web application, this mode offers all the same functionalities and capabilities of a registered user but without saved memory. This essentially means users inputting specs about their laptops won’t be saved if they refresh the page or come back to the site later. Similarly, they would not be able to favorite games of interest. 
 
 
 
