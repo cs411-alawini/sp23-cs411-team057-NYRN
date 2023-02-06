@@ -25,7 +25,7 @@
 
 ## Project Summary
 
-#Project Title: GameFinder
+###Project Title: GameFinder
 
 #Project Summary:
 
