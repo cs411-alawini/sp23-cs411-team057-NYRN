@@ -5,7 +5,7 @@
 |   Info      |        Description     |
 | ----------- | ---------------------- |
 | TeamID      |        Team-057        |
-| TeamName    |         NYRN           |
+| TeamName    |         NYRN (GameFinder)          |
 | Captain     |  Navin Ranganathan     |
 | Captain     |  navinr2@illinois.edu  |
 | Member1     |      Rahul Bhatt       |
