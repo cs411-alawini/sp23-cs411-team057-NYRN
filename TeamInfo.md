@@ -25,8 +25,6 @@
 
 ## Project Summary
 
-**Project Summary:**
-
 Our video game search engine, GameFinder, is designed to help users find the perfect game for their preferences and computer specifications. With GameFinder, users can input specific characteristics they are looking for in a game, such as genre, setting, or playstyle, and their computer specs, such as graphics card and RAM. The search engine will then generate a catalog of games that match the user's criteria, ensuring that they find a game that not only fits their interests but also runs smoothly on their computer. Whether you're looking for a fast-paced action game or a relaxing puzzle game, GameFinder has you covered. Say goodbye to endless scrolling through game listings and hello to a tailored, efficient search experience. It’s always game time. 
 
 
