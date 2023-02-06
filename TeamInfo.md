@@ -45,14 +45,16 @@ With this database, we plan to highlight different features of games currently a
 
 
 Filtering games based on provided preferences: 
+
 This is the most important function of this application. We will provide dropdown menus, check boxes, or text input fields for users to select their preferences easily. We can then use these inputs to filter out irrelevant games. 
+
 Our categories should include:
-Game genre. (This is the most important feature. For this category, we can use check boxes so that users can select multiple genres for more specific filtering. 
-Platform. (e.g. Windows, MacOS, PS5…)
-Language. (English, Spanish, etc.)
-Content Ratings. (e.g. PG, R, …)
-Price range. (We can use text input here for convenience. )
-Minimum requirements. (Instead of asking users to look up the requirements for specific games, we offer this filter so that they can find games that can run on their computer directly.)
+- Game genre. (This is the most important feature. For this category, we can use check boxes so that users can select multiple genres for more specific filtering. 
+- Platform. (e.g. Windows, MacOS, PS5…)
+- Language. (English, Spanish, etc.)
+- Content Ratings. (e.g. PG, R, …)
+- Price range. (We can use text input here for convenience. )
+- Minimum requirements. (Instead of asking users to look up the requirements for specific games, we offer this filter so that they can find games that can run on their computer directly.)
 
 
 Searching specific games by name: 
