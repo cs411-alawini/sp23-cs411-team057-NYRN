@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add PC</title>
+  <style>
+    /* Add your CSS styles here */
+  </style>
+  <script>
+    async function submitAddPcForm(event) {
+      event.preventDefault();
+
+      // Collect form data
+      const formData = new FormData(event.target);
+
+      const response = await fetch('/add-pc', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+
+      if (response.ok) {
+        alert('PC added successfully');
+        // Redirect to your main page
+        location.href = '/';
+      } else {
+        alert('Error adding PC');
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Add PC</h1>
+  <form id="add-pc-form" onsubmit="submitAddPcForm(event)">
+    <label for="PC-name">Query Name:</label>
+    <input type="text" id="query-name" name="QueryName" required>
+    <br>
+    <label for="controller-support">Controller Support:</label>
+    <input type="checkbox" id="controller-support" name="ControllerSupport">
+    <br>
+    <label for="is-free">Is Free:</label>
+    <input type="checkbox" id="is-free" name="IsFree">
+    <br>
+    <label for="free-ver-avail">Free Version Available:</label>
+    <input type="checkbox" id="free-ver-avail" name="FreeVerAvail">
+    <br>
+    <label for="purchase-avail">Purchase Available:</label>
+    <input type="checkbox" id="purchase-avail" name="PurchaseAvail">
+    <br>
+    <label for="subscription-avail">Subscription Available:</label>
+    <input type="checkbox" id="subscription-avail" name="SubscriptionAvail">
+    <br>
+    <label for="platform-windows">Platform Windows:</label>
+    <input type="checkbox" id="platform-windows" name="PlatformWindows">
+    <br>
+    <label for="platform-linux">Platform Linux:</label>
+    <input type="checkbox" id="platform-linux" name="PlatformLinux">
+    <br>
+    <label for="platform-mac">Platform Mac:</label>
+    <input type="checkbox" id="platform-mac" name="PlatformMac">
+    <br>
+    <label for="pc-reqs-have-min">PC Requirements Have Minimum:</label>
+    <input type="checkbox" id="pc-reqs-have-min" name="PCReqsHaveMin">
+    <br>
+    <label for="pc-reqs-have-rec">PC Requirements Have Recommended:</label>
+    <input type="checkbox" id="pc-reqs-have-rec" name="PCReqsHaveRec">
+    <br>
+    <label for="linux-reqs-have-min">Linux Requirements Have Minimum:</label>
+    <input type="checkbox" id="linux-reqs-have-min" name="LinuxReqsHaveMin">
+    <br>
+    <label for="linux-reqs-have-rec">Linux Requirements Have Recommended:</label>
+    <input type="checkbox" id="linux-reqs-have-rec" name="LinuxReqsHaveRec">
+    <br>
+    <label for="mac-reqs-have-min">Mac Requirements Have Minimum:</label>
+    <input type="checkbox" id="mac-reqs-have-min" name="MacReqsHaveMin">
+    <br>
+    <label for="mac-reqs-have-rec">Mac Requirements Have Recommended:</label>
+    <input type="checkbox" id="mac-reqs-have-rec" name="MacReqsHaveRec">
+    <br>
+    <label for="category-single-player">Category Single Player:</label>
+    <input type="checkbox" id="category-single-player" name="CategorySinglePlayer">
+    <br>
+    <label for="category-multiplayer">Category Multiplayer:</label>
+    <input type="checkbox" id="category-multiplayer" name="CategoryMultiplayer">
+    <br>
+    <label for="category-coop">Category Coop:</label>
+    <input type="checkbox" id="category-coop" name="CategoryCoop">
+    <br>
+    <label for="category-mmo">Category MMO:</label>
+    <input type="checkbox" id="category-mmo" name="CategoryMMO">
+    <br>
+    <label for="category-in-app-purchase">Category In-App Purchase:</label>
+    <input type="checkbox" id="category-in-app-purchase" name="CategoryInAppPurchase">
+    <br>
+    <label for="category-include-src-sdk">Category Include Source SDK:</label>
+    <input type="checkbox" id="category-include-src-sdk" name="CategoryIncludeSrcSDK">
+    <br>
+    <label for="category-include-level-editor">Category Include Level Editor:</label>
+    <input type="checkbox" id="category-include-level-editor" name="CategoryIncludeLevelEditor">
+    <br>
+    <label for="category-vr-support">Category VR Support:</label>
+    <input type="checkbox" id="category-vr-support" name="CategoryVRSupport">
+    <br>
+    <label for="genre-is-non-game">Genre Is Non-Game:</label>
+    <input type="checkbox" id="genre-is-non-game" name="GenreIsNonGame">
+    <br>
+    <label for="genre-is-indie">Genre Is Indie:</label>
+    <input type="checkbox" id="genre-is-indie" name="GenreIsIndie">
+    <br>
+    <label for="genre-is-action">Genre Is Action:</label>
+    <input type="checkbox" id="genre-is-action" name="GenreIsAction">
+    <br>
+    <label for="genre-is-adventure">Genre Is Adventure:</label>
+    <input type="checkbox" id="genre-is-adventure" name="GenreIsAdventure">
+    <br>
+    <label for="genre-is-casual">Genre Is Casual:</label>
+    <input type="checkbox" id="genre-is-casual" name="GenreIsCasual">
+    <br>
+    <label for="genre-is-strategy">Genre Is Strategy:</label>
+    <input type="checkbox" id="genre-is-strategy" name="GenreIsStrategy">
+    <br>
+    <label for="genre-is-rpg">Genre Is RPG:</label>
+    <input type="checkbox" id="genre-is-rpg" name="GenreIsRPG">
+    <br>
+    <label for="genre-is-simulation">Genre Is Simulation:</label>
+    <input type="checkbox" id="genre-is-simulation" name="GenreIsSimulation">
+    <br>
+    <label for="genre-is-early-access">Genre Is Early Access:</label>
+    <input type="checkbox" id="genre-is-early-access" name="GenreIsEarlyAccess">
+    <br>
+    <label for="genre-is-free-to-play">Genre Is Free To Play:</label>
+    <input type="checkbox" id="genre-is-free-to-play" name="GenreIsFreeToPlay">
+    <br>
+    <label for="genre-is-sports">Genre Is Sports:</label>
+    <input type="checkbox" id="genre-is-sports" name="GenreIsSports">
+    <br>
+    <label for="genre-is-racing">Genre Is Racing:</label>
+    <input type="checkbox" id="genre-is-racing" name="GenreIsRacing">
+    <br>
+    <label for="genre-is-massively-multiplayer">Genre Is Massively Multiplayer:</label>
+    <input type="checkbox" id="genre-is-massively-multiplayer" name="GenreIsMassivelyMultiplayer">
+    <br>
+    <label for="supported-languages">Supported Languages:</label>
+    <input type="text" id="supported-languages" name="SupportedLanguages">
+    <br>
+    <label for="pc-min-reqs-text">PC Minimum Requirements Text:</label>
+    <textarea id="pc-min-reqs-text" name="PCMinReqsText"></textarea>
+    <br>
+    <label for="pc-rec-reqs-text">PC Recommended Requirements Text:</label>
+    <textarea id="pc-rec-reqs-text" name="PCRecReqsText"></textarea>
+    <br>
+    <label for="linux-min-reqs-text">Linux Minimum Requirements Text:</label>
+    <textarea id="linux-min-reqs-text" name="LinuxMinReqsText"></textarea>
+    <br>
+    <label for="linux-rec-reqs-text">Linux Recommended Requirements Text:</label>
+    <textarea id="linux-rec-reqs-text" name="LinuxRecReqsText"></textarea>
+    <br>
+    <label for="mac-min-reqs-text">Mac Minimum Requirements Text:</label>
+    <textarea id="mac-min-reqs-text" name="MacMinReqsText"></textarea>
+    <br>
+    <label for="mac-rec-reqs-text">Mac Recommended Requirements Text:</label>
+    <textarea id="mac-rec-reqs-text" name="MacRecReqsText"></textarea>
+    <br>
+    <button type="submit">Submit</button>
+  </form>
+  <script src="add-pc.js"></script>
+</body>
+</html>
