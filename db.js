@@ -25,6 +25,17 @@ app.use(
 );
 
 // Data endpoints
+
+// Creating indexes
+// pool.query('CREATE INDEX idx_games_query_name ON Games(QueryName)', (err, results) => {
+//   if (err) {
+//     console.error('Error creating index:', err);
+//     return;
+//   }
+//   console.log('Index created');
+// });
+
+
 app.get('/data', (req, res) => {
   pool.query(
     'SELECT g.QueryName, AVG(r.review_score) AS avg_review_score FROM Games g JOIN Reviews r ON g.QueryName = r.app_name GROUP BY g.QueryID, g.QueryName HAVING AVG(r.review_score) >= 0.75 LIMIT 15;',
@@ -53,14 +64,6 @@ app.get('/data2', (req, res) => {
   );
 });
 
-app.get('/check-login-status', (req, res) => {
-  if (req.session.user) {
-  res.json(true);
-  } else {
-  res.json(false);
-  }
-});
-
 // Signup endpoint
 app.post('/signup', async (req, res) => {
   const { email, password } = req.body;
@@ -79,6 +82,66 @@ app.post('/signup', async (req, res) => {
     }
   );
 });
+
+app.get('/data3', (req, res) => {
+  pool.query(
+    'SELECT * FROM users',
+    (err, results) => {
+      if (err) {
+        console.error('Error executing query:', err);
+        res.status(500).send('Error executing query');
+        return;
+      }
+      res.json(results);
+    }
+  );
+});
+
+app.get('/check-login-status', (req, res) => {
+  if (req.session.user) {
+  res.json(true);
+  } else {
+  res.json(false);
+  }
+});
+
+// Update user endpoint
+app.put('/update-user', async (req, res) => {
+  const { id, email, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  pool.query(
+      'UPDATE users SET email = ?, password_hash = ? WHERE id = ?',
+      [email, hashedPassword, id],
+      (err, results) => {
+          if (err) {
+              console.error('Error updating user:', err);
+              res.status(500).send('Error updating user');
+              return;
+          }
+          res.send('User updated');
+      }
+  );
+});
+
+// Delete user endpoint
+app.delete('/delete-user/:id', (req, res) => {
+  const { id } = req.params;
+
+  pool.query(
+      'DELETE FROM users WHERE id = ?',
+      [id],
+      (err, results) => {
+        if (err) {
+            console.error('Error deleting user:', err);
+            res.status(500).send('Error deleting user');
+            return;
+        }
+        res.send('User deleted');
+    }
+);
+});
+
 
 // Login endpoint
 app.post('/login', (req, res) => {
@@ -103,34 +166,7 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.post('/add-pc', async (req, res) => {
-  if (!req.session.user) {
-    res.status(401).send('Unauthorized');
-    return;
-  }
-  const userId = req.session.user.id;
-  const pcData = req.body;
-  const keys = Object.keys(pcData);
-  const values = Object.values(pcData);
 
-  // Add user_id to the values array
-  values.unshift(userId);
-
-  const sql = `
-    INSERT INTO UserPC
-    (user_id, ${keys.join(', ')})
-    VALUES
-    (?, ${values.map(() => '?').join(', ')})
-  `;
-
-  try {
-    const [result] = await pool.query(sql, values);
-    res.status(200).send('PC added successfully');
-  } catch (err) {
-    console.error('Error adding PC:', err);
-    res.status(500).send('Error adding PC');
-  }
-});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

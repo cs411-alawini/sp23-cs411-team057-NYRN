@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -13,21 +13,18 @@
 
       // Collect form data
       const formData = new FormData(event.target);
+      const data = {};
+
+      // Convert FormData to a plain JavaScript object
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
 
       const response = await fetch('/add-pc', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(formData)),
+        body: JSON.stringify(data),
       });
-
-      if (response.ok) {
-        alert('PC added successfully');
-        // Redirect to your main page
-        location.href = '/';
-      } else {
-        alert('Error adding PC');
-      }
-    }
   </script>
 </head>
 <body>
@@ -166,4 +163,4 @@
   </form>
   <script src="add-pc.js"></script>
 </body>
-</html>
+</html> -->
