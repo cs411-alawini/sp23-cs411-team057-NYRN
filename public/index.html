@@ -79,16 +79,73 @@
 
 
   </script>
+  <h1>Search for a Game</h1>
+  <form id="search-form">
+      <input type="text" id="search-input" placeholder="Type game name..." />
+      <button type="submit">Search</button>
+  </form>
+  <table id="search-results">
+      <thead>
+          <tr>
+              <th>Name</th>
+          </tr>
+      </thead>
+      <tbody>
+          <!-- Search results will be displayed here -->
+      </tbody>
+  </table>
 
-    <!-- <h1>Search for a Game</h1>
-    <form id="search-form">
-        <input> type="text" id="search-input" name="search" placeholder="Search for a game">
-        <button type="submit">Search</button>
-    </form>
-    <div id="search-results">
+  <script>
+    // const searchForm = document.getElementById('search-form');
+    // const searchInput = document.getElementById('search-input');
+    // const searchResults = document.getElementById('search-results');
 
-    </div> -->
+    // searchForm.addEventListener('submit', async (event) => {
+    //     event.preventDefault();
 
+    //     const query = searchInput.value;
+    //     const response = await fetch(`/search?query=${query}`);
+    //     const data = await response.json();
+
+    //     searchResults.innerHTML = '';
+    //     data.forEach((row) => {
+    //         const tr = document.createElement('tr');
+    //         tr.innerHTML = `
+    //             <td>${row.Name}</td>
+    //         `;
+    //         searchResults.appendChild(tr);
+    //     });
+    // });
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchForm = document.querySelector('#search-form');
+      const searchInput = document.querySelector('#search-input');
+      const searchResults = document.querySelector('#search-results tbody');
+
+      searchForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const keyword = searchInput.value.trim();
+          if (keyword) {
+              searchGames(keyword);
+          }
+      });
+
+      async function searchGames(keyword) {
+          searchResults.innerHTML = '';
+          try {
+              const response = await fetch(`/search-games?keyword=${encodeURIComponent(keyword)}`);
+              const games = await response.json();
+              games.forEach((game) => {
+                  const tr = document.createElement('tr');
+                  tr.innerHTML = `<td>${game.Name}</td>`;
+                  searchResults.appendChild(tr);
+              });
+          } catch (error) {
+              console.error('Error fetching games:', error);
+          }
+      }
+  });
+
+  </script>
     <h1>Highest Rated Steam Games</h1>
   <table id="customers-table">
     <thead>
