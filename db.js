@@ -36,7 +36,32 @@ app.use(
 // });
 
 
+// app.get('/data', (req, res) => {
+//   pool.query(
+//     'SELECT g.QueryName, AVG(r.review_score) AS avg_review_score FROM Games g JOIN Reviews r ON g.QueryName = r.app_name GROUP BY g.QueryID, g.QueryName HAVING AVG(r.review_score) >= 0.75 LIMIT 15;',
+//     (err, results) => {
+//       if (err) {
+//         console.error('Error executing query:', err);
+//         res.status(500).send('Error executing query');
+//         return;
+//       }
+//       res.json(results);
+//     }
+//   );
+// });
+
+let cachedData = null;
+let cacheTimestamp = null;
+const cacheDuration = 48 * 60 * 60 * 1000; // 48h in milliseconds
+
 app.get('/data', (req, res) => {
+  const currentTime = Date.now();
+
+  if (cachedData && cacheTimestamp && currentTime - cacheTimestamp < cacheDuration) {
+    res.json(cachedData);
+    return;
+  }
+
   pool.query(
     'SELECT g.QueryName, AVG(r.review_score) AS avg_review_score FROM Games g JOIN Reviews r ON g.QueryName = r.app_name GROUP BY g.QueryID, g.QueryName HAVING AVG(r.review_score) >= 0.75 LIMIT 15;',
     (err, results) => {
@@ -45,10 +70,14 @@ app.get('/data', (req, res) => {
         res.status(500).send('Error executing query');
         return;
       }
+
+      cachedData = results;
+      cacheTimestamp = currentTime;
       res.json(results);
     }
   );
 });
+
 
 app.get('/data2', (req, res) => {
   pool.query(

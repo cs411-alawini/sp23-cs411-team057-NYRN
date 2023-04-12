@@ -96,26 +96,6 @@
   </table>
 
   <script>
-    // const searchForm = document.getElementById('search-form');
-    // const searchInput = document.getElementById('search-input');
-    // const searchResults = document.getElementById('search-results');
-
-    // searchForm.addEventListener('submit', async (event) => {
-    //     event.preventDefault();
-
-    //     const query = searchInput.value;
-    //     const response = await fetch(`/search?query=${query}`);
-    //     const data = await response.json();
-
-    //     searchResults.innerHTML = '';
-    //     data.forEach((row) => {
-    //         const tr = document.createElement('tr');
-    //         tr.innerHTML = `
-    //             <td>${row.Name}</td>
-    //         `;
-    //         searchResults.appendChild(tr);
-    //     });
-    // });
     document.addEventListener('DOMContentLoaded', () => {
       const searchForm = document.querySelector('#search-form');
       const searchInput = document.querySelector('#search-input');
@@ -159,19 +139,41 @@
     <tbody>
     </tbody>
   </table>
-  <!-- Add this below the first table -->
-    <h1>Top Windows Games by Average Hours Played</h1>
-    <table id="windows-games-table">
+  <h1>Top Windows Games by Average Hours Played</h1>
+  <button id="sort-btn">Sort by Average Hours</button>
+  <table id="windows-games-table">
     <thead>
-        <tr>
+      <tr>
         <th>Game</th>
         <th>Average Hours</th>
         <th>Windows Platform</th>
-        </tr>
+      </tr>
     </thead>
     <tbody>
     </tbody>
-    </table>
+  </table>
+  <script>
+    // Add an event listener to the sort button
+    const sortBtn = document.querySelector('#sort-btn');
+    const wind = document.querySelector('#windows-games-table tbody');
+    let sortOrder = 1;
+
+    sortBtn.addEventListener('click', () => {
+      const rows = Array.from(wind.querySelectorAll('tr'));
+
+      rows.sort((a, b) => {
+        const aValue = parseFloat(a.children[1].textContent);
+        const bValue = parseFloat(b.children[1].textContent);
+        return sortOrder * (aValue - bValue);
+      });
+
+      wind.innerHTML = '';
+      rows.forEach(row => wind.appendChild(row));
+
+      // Toggle sortOrder for the next click
+      sortOrder = -sortOrder;
+    });
+</script>
 
     <h1>Users</h1>
     <table id="users-table">
