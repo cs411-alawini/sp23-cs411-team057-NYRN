@@ -85,7 +85,7 @@ app.post('/signup', async (req, res) => {
 
 app.get('/data3', (req, res) => {
   pool.query(
-    'SELECT * FROM users',
+    'SELECT * FROM Purchases',
     (err, results) => {
       if (err) {
         console.error('Error executing query:', err);
@@ -96,6 +96,25 @@ app.get('/data3', (req, res) => {
     }
   );
 });
+
+
+// app.get('/search-games', (req, res) => {
+//   const keyword = req.query.keyword;
+
+//   pool.query(
+//       "SELECT * FROM Purchases WHERE Name LIKE CONCAT('%', ?, '%')",
+//       [keyword],
+//       (err, results) => {
+//           if (err) {
+//               console.error('Error executing query:', err);
+//               res.status(500).send('Error executing query');
+//               return;
+//           }
+//           res.json(results);
+//       }
+//   );
+// });
+
 
 app.get('/check-login-status', (req, res) => {
   if (req.session.user) {
