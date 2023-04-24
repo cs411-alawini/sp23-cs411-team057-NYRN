@@ -1,0 +1,12 @@
+DELIMITER $$
+CREATE TRIGGER fanLikes
+AFTER INSERT ON likes
+FOR EACH ROW
+BEGIN
+
+INSERT INTO gf_fan_fave(g_id,g_name,g_price,g_curr,g_short)
+SELECT QueryID, QueryName, PriceFinal, PriceCurrency, ShortDescrip 
+FROM Games 
+WHERE QueryID IN (SELECT game_id FROM likes GROUP BY game_id HAVING COUNT(game_id)>5 ORDER BY COUNT(game_id) DESC LIMIT 10) AND QueryID NOT IN(SELECT g_id FROM gf_fan_fave); 
+END; $$ 
+DELIMITER ;
