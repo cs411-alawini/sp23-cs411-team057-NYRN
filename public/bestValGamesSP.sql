@@ -7,7 +7,7 @@ BEGIN
     DECLARE curr_upvote INT;
     DECLARE curr_popularity VARCHAR(100);
     DECLARE curr_playtime INT DEFAULT 0;
-    DECLARE g_cursor CURSOR FOR SELECT QueryName, MetaCritic, PriceFinal, RecommendationCount  FROM GameFinder.Games WHERE Metacritic >90 AND PriceFinal <15.00;
+    DECLARE g_cursor CURSOR FOR SELECT DISTINCT QueryName, MetaCritic, PriceFinal, RecommendationCount  FROM GameFinder.Games NATURAL JOIN (SELECT DISTINCT game_id,COUNT(game_id) AS cG FROM GameFinder.likes GROUP BY game_id HAVING cG>10) AS T WHERE Metacritic >90 AND PriceFinal <15.00;
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
     
     DROP TABLE IF EXISTS bestValGames;
@@ -50,6 +50,6 @@ BEGIN
     
     CLOSE g_cursor;
     
-    SELECT * FROM bestValGames;
+    SELECT * FROM bestValGames ORDER BY game_name;
     
 	END
