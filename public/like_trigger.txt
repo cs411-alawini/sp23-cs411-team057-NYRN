@@ -1,5 +1,3 @@
-USE GameFinder;
-
 DELIMITER $$
 CREATE TRIGGER fanLikes
 AFTER INSERT ON likes
@@ -9,7 +7,7 @@ BEGIN
 SET @count_likes = (SELECT COUNT(game_id) FROM GameFinder.likes WHERE game_id=NEW.game_id);
 SET @is_present = (SELECT COUNT(g_id) FROM GameFinder.gf_fan_fave WHERE g_id=NEW.game_id);
 
-IF @count_likes > 2 THEN
+IF @count_likes > 1 THEN
 	IF @is_present = 1 THEN
 		UPDATE gf_fan_fave SET create_date = now() WHERE g_id = NEW.game_id;
 	ELSE 
