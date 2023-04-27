@@ -64,6 +64,7 @@ app.get('/data', (req, res) => {
 
   pool.query(
     'SELECT g.QueryName, AVG(r.review_score) AS avg_review_score FROM Games g JOIN Reviews r ON g.QueryName = r.app_name GROUP BY g.QueryID, g.QueryName HAVING AVG(r.review_score) >= 0.75 LIMIT 15;',
+    // 'SELECT * from liked LIMIT 15;',
     (err, results) => {
       if (err) {
         console.error('Error executing query:', err);
@@ -78,6 +79,19 @@ app.get('/data', (req, res) => {
   );
 });
 
+app.get('/gb-fan-fave', (req, res) => {
+  pool.query(
+    'SELECT * FROM gf_fan_fave;',
+    (err, results) => {
+      if (err) {
+        console.error('Error executing query:', err);
+        res.status(500).send('Error executing query');
+        return;
+      }
+      res.json(results);
+    }
+  );
+});
 
 app.get('/data2', (req, res) => {
   pool.query(
@@ -92,6 +106,18 @@ app.get('/data2', (req, res) => {
     }
   );
 });
+
+app.get('/best-value-games', (req, res) => {
+  pool.query('CALL bestVal();', (err, results) => {
+    if (err) {
+      console.error('Error executing stored procedure:', err);
+      res.status(500).send('Error executing stored procedure');
+      return;
+    }
+    res.json(results[0]);
+  });
+});
+
 
 // Signup endpoint
 app.post('/signup', async (req, res) => {
@@ -130,16 +156,76 @@ app.get('/search-games', (req, res) => {
   const keyword = req.query.keyword;
 
   pool.query(
-      "SELECT Name FROM Purchases WHERE Name LIKE CONCAT('%', ?, '%') GROUP BY Name;",
-      [keyword],
-      (err, results) => {
-          if (err) {
-              console.error('Error executing query:', err);
-              res.status(500).send('Error executing query');
-              return;
-          }
-          res.json(results);
+    "SELECT Name FROM Purchases WHERE Name LIKE CONCAT('%', ?, '%') GROUP BY Name;",
+    [keyword],
+    (err, results) => {
+        if (err) {
+            console.error('Error executing query:', err);
+            res.status(500).send('Error executing query');
+            return;
+        }
+        res.json(results);
+    }
+  );
+
+  // pool.query(
+  //     "SELECT Name FROM Purchases WHERE Name LIKE CONCAT('%', ?, '%') GROUP BY Name;",
+  //     [keyword],
+  //     (err, results) => {
+  //         if (err) {
+  //             console.error('Error executing query:', err);
+  //             res.status(500).send('Error executing query');
+  //             return;
+  //         }
+  //         res.json(results);
+  //     }
+  // );
+});
+
+app.post('/toggle-favorite', async (req, res) => {
+  const { game_id } = req.body;
+  const user_id = req.session.user.id;
+
+  pool.query(
+    'SELECT * FROM liked WHERE user_id = ? AND game_id = ?;',
+    [user_id, game_id],
+    (err, results) => {
+      if (err) {
+        console.error('Error checking favorite:', err);
+        res.status(500).send('Error checking favorite');
+        return;
       }
+
+      if (results.length > 0) {
+        // Remove the favorite
+        pool.query(
+          'DELETE FROM liked WHERE user_id = ? AND game_id = ? ;',
+          [user_id, game_id],
+          (err, results) => {
+            if (err) {
+              console.error('Error removing favorite:', err);
+              res.status(500).send('Error removing favorite');
+              return;
+            }
+            res.send('Favorite removed');
+          }
+        );
+      } else {
+        // Add the favorite
+        pool.query(
+          'INSERT INTO liked (user_id, game_id) VALUES (?, ?);',
+          [user_id, game_id],
+          (err, results) => {
+            if (err) {
+              console.error('Error adding favorite:', err);
+              res.status(500).send('Error adding favorite');
+              return;
+            }
+            res.send('Favorite added');
+          }
+        );
+      }
+    }
   );
 });
 
