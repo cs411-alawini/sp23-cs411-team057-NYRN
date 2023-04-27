@@ -9,8 +9,9 @@ SELECT DISTINCT QueryID, QueryName, PriceFinal, PriceCurrency, ShortDescrip
 FROM Games
 WHERE QueryID IN (SELECT game_id
 FROM likes
+WHERE like_data >= (now()-86400)
 GROUP BY game_id
-HAVING COUNT(game_id)>5
+HAVING COUNT(game_id)>2
 ORDER BY COUNT(game_id) DESC) AND QueryID NOT IN (SELECT DISTINCT g_id FROM gf_fan_fave);
 DELETE FROM gf_fan_fave WHERE create_date < (now()-86400);
 END; $$ 
