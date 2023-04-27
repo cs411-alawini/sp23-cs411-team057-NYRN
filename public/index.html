@@ -19,6 +19,15 @@
     th {
       background-color: #f2f2f2;
     }
+  .favorite-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+  }
+
+  .favorite-btn.favorited {
+    color: #f2a32d;
+  }
   </style>
 </head>
 <body>
@@ -88,10 +97,11 @@
       <thead>
           <tr>
               <th>Name</th>
+              <th>Favorite</th>
           </tr>
       </thead>
       <tbody>
-          <!-- Search results will be displayed here -->
+          <!-- Search results displayed here -->
       </tbody>
   </table>
 
@@ -110,18 +120,43 @@
       });
 
       async function searchGames(keyword) {
-          searchResults.innerHTML = '';
-          try {
-              const response = await fetch(`/search-games?keyword=${encodeURIComponent(keyword)}`);
-              const games = await response.json();
-              games.forEach((game) => {
-                  const tr = document.createElement('tr');
-                  tr.innerHTML = `<td>${game.Name}</td>`;
-                  searchResults.appendChild(tr);
+        searchResults.innerHTML = '';
+        try {
+          const response = await fetch(`/search-games?keyword=${encodeURIComponent(keyword)}`);
+          const games = await response.json();
+          games.forEach((game) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${game.Name}</td>
+            <td>
+              <button class="favorite-btn" data-game-name="${game.Name}">⭐</button>
+            </td>`;
+          searchResults.appendChild(tr);
+          });
+
+          const favoriteButtons = document.querySelectorAll('.favorite-btn');
+          favoriteButtons.forEach((btn) => {
+            btn.addEventListener('click', async (e) => {
+              const gameName = e.target.dataset.gameName;
+              const response = await fetch(`/toggle-favorite`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ game_id: gameName }),
               });
-          } catch (error) {
-              console.error('Error fetching games:', error);
-          }
+
+              if (response.ok) {
+                e.target.classList.toggle('favorited');
+              } else {
+                alert('Error favoriting game');
+              }
+            });
+          });
+
+        } catch (error) {
+          console.error('Error fetching games:', error);
+        }
       }
   });
 
@@ -174,6 +209,90 @@
       sortOrder = -sortOrder;
     });
 </script>
+
+<h1>Best Value Games</h1>
+<table id="best-value-games-table">
+  <thead>
+    <tr>
+      <th>Game Name</th>
+      <th>Critic Score</th>
+      <th>Price</th>
+      <th>Popularity</th>
+      <th>Play Time</th>
+      <th>Favorite</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<script>
+  const bestValueGamesTableBody = document.querySelector('#best-value-games-table tbody');
+
+fetch('/best-value-games')
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(row => {
+      const tr = document.createElement('tr');
+
+      tr.innerHTML = `
+        <td>${row.game_name}</td>
+        <td>${row.critic_score}</td>
+        <td>${row.price.toFixed(2)}</td>
+        <td>${row.popularity}</td>
+        <td>${row.play_time}</td>
+        <td>${row.is_fave}</td>
+      `;
+
+      bestValueGamesTableBody.appendChild(tr);
+    });
+  })
+  .catch(error => {
+    console.error('Error fetching best value games data:', error);
+  });
+</script>
+
+<h1>GB Fan Favorites</h1>
+<table id="gb-fan-fave-table">
+  <thead>
+    <tr>
+      <th>Game ID</th>
+      <th>Game Name</th>
+      <th>Current</th>
+      <th>Price</th>
+      <th>Short Description</th>
+      <th>Create Date</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script>
+  const gbFanFaveTableBody = document.querySelector('#gb-fan-fave-table tbody');
+
+  fetch('/gb-fan-fave')
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+
+        tr.innerHTML = `
+          <td>${row.g_id}</td>
+          <td>${row.g_name}</td>
+          <td>${row.g_curr}</td>
+          <td>${row.g_price.toFixed(2)}</td>
+          <td>${row.g_short}</td>
+          <td>${new Date(row.create_date).toLocaleString()}</td>
+        `;
+
+        gbFanFaveTableBody.appendChild(tr);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching GB Fan Favorites data:', error);
+    });
+</script>
+
 
     <h1>Users</h1>
     <table id="users-table">
