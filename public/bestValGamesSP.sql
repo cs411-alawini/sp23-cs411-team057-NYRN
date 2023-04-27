@@ -10,13 +10,14 @@ BEGIN
     DECLARE curr_isFave VARCHAR(30);
     DECLARE g_cursor CURSOR FOR SELECT DISTINCT QueryName, MetaCritic, PriceFinal, RecommendationCount, '-'  
 								FROM GameFinder.Games NATURAL JOIN 
-                                (SELECT DISTINCT game_id,COUNT(game_id) AS cG FROM GameFinder.likes GROUP BY game_id HAVING cG>10) AS T 
+                                (SELECT DISTINCT game_id,COUNT(game_id) AS cG FROM GameFinder.liked GROUP BY game_id HAVING cG>1) AS T 
                                 WHERE Metacritic >90 AND PriceFinal <15.00
                                 UNION
                                 SELECT DISTINCT QueryName, MetaCritic, PriceFinal, RecommendationCount, 'Site Favorite'  
 								FROM (SELECT * FROM GameFinder.Games WHERE QueryID IN (SELECT g_id FROM gf_fan_fave)) AS fanFave NATURAL JOIN 
-                                (SELECT DISTINCT game_id,COUNT(game_id) AS cG FROM GameFinder.likes GROUP BY game_id HAVING cG>10) AS T 
+                                (SELECT DISTINCT game_id,COUNT(game_id) AS cG FROM GameFinder.likes GROUP BY game_id HAVING cG>1) AS T 
                                 WHERE fanFave.PriceFinal <15.00;
+                                
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
     
     DROP TABLE IF EXISTS bestValGames;
