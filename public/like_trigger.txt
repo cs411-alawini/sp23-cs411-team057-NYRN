@@ -1,18 +1,25 @@
+USE GameFinder;
+
 DELIMITER $$
 CREATE TRIGGER fanLikes
 AFTER INSERT ON likes
 FOR EACH ROW
 BEGIN
 
-INSERT INTO gf_fan_fave(g_id,g_name,g_price,g_curr,g_short)
-SELECT DISTINCT QueryID, QueryName, PriceFinal, PriceCurrency, ShortDescrip
-FROM Games
-WHERE QueryID IN (SELECT game_id
-FROM likes
-WHERE like_data >= (now()-86400)
-GROUP BY game_id
-HAVING COUNT(game_id)>2
-ORDER BY COUNT(game_id) DESC) AND QueryID NOT IN (SELECT DISTINCT g_id FROM gf_fan_fave);
+SET @count_likes = (SELECT COUNT(game_id) FROM GameFinder.likes WHERE game_id=NEW.game_id);
+SET @is_present = (SELECT COUNT(g_id) FROM GameFinder.gf_fan_fave WHERE g_id=NEW.game_id);
+
+IF @count_likes > 2 THEN
+	IF @is_present = 1 THEN
+		UPDATE gf_fan_fave SET create_date = now() WHERE g_id = NEW.game_id;
+	ELSE 
+		INSERT INTO gf_fan_fave(g_id,g_name,g_price,g_curr,g_short)
+		SELECT DISTINCT QueryID, QueryName, PriceFinal, PriceCurrency, ShortDescrip
+		FROM Games
+		WHERE QueryID = NEW.game_id;
+	END IF;
+END IF;
+        
 DELETE FROM gf_fan_fave WHERE create_date < (now()-86400);
 END; $$ 
 DELIMITER ;
