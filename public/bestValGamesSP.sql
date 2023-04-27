@@ -55,7 +55,7 @@ BEGIN
     CLOSE g_cursor;
     
     SELECT DISTINCT bestValGames.game_name, critic_score, price, popularity, 
-					is_fave, IFNULL(curr_playtime,0) 
+					is_fave, IFNULL(curr_playtime,0) AS play_time
 			FROM bestValGames LEFT JOIN 
 			(SELECT Name AS game_name, AVG(Hours) AS curr_playtime 
 			FROM Purchases GROUP BY game_name) AS temp 
