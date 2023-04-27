@@ -54,6 +54,6 @@ BEGIN
     
     CLOSE g_cursor;
     
-    SELECT * FROM bestValGames LEFT JOIN (SELECT Name AS game_name, AVG(Hours) AS curr_playtime FROM Purchases GROUP BY game_name) AS temp ON (temp.game_name=bestValGames.game_name) ORDER BY bestValGames.game_name;
+    SELECT * FROM bestValGames LEFT JOIN (SELECT Name AS game_name, AVG(Hours) AS curr_playtime FROM Purchases GROUP BY game_name) AS temp ON (temp.game_name=bestValGames.game_name) ORDER BY price;
     
 	END
