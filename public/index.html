@@ -127,9 +127,9 @@
           games.forEach((game) => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td>${game.Name}</td>
+            <td>${game.QueryName}</td>
             <td>
-              <button class="favorite-btn" data-game-name="${game.Name}">⭐</button>
+              <button class="favorite-btn" data-game-name="${game.QueryName}">⭐</button>
             </td>`;
           searchResults.appendChild(tr);
           });
