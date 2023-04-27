@@ -211,12 +211,12 @@ app.get('/check-login-status', (req, res) => {
   }
 });
 
-const masters = ["rbhatt06@gmail.com"]
+const masters = ["nimishm2@illinois.edu", "rahulb3@illinois.edu"]
 
 app.get('/is-user-master', (req, res) => {
   console.log(req.session.user);
   console.log(req.session.user.email);
-  if (req.session.user.email == masters[0]) {
+  if (masters.includes(req.session.user.email)) {
     res.json(true);
   } else {
     res.json(false);
