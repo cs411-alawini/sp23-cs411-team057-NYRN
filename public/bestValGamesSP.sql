@@ -6,7 +6,6 @@ BEGIN
     DECLARE curr_price FLOAT;
     DECLARE curr_upvote INT;
     DECLARE curr_popularity VARCHAR(100);
-    DECLARE curr_playtime INT DEFAULT 0;
     DECLARE curr_isFave VARCHAR(30);
     DECLARE g_cursor CURSOR FOR SELECT DISTINCT QueryName, MetaCritic, PriceFinal, RecommendationCount, '-'  
 								FROM GameFinder.Games NATURAL JOIN 
@@ -26,7 +25,6 @@ BEGIN
         critic_score INT,
         price FLOAT,
         popularity VARCHAR(100),
-        play_time INT,
         is_fave VARCHAR(30)
     );
     
@@ -49,18 +47,13 @@ BEGIN
 	ELSE
 		SET curr_popularity = "Legendary";
 	END IF;
-	
-    SET curr_playtime = (SELECT AVG(Hours) FROM Purchases WHERE Name LIKE curr_game);
-    IF (curr_playtime IS NULL) THEN
-		SET curr_playtime = 0;
-	END IF;
     
-    INSERT IGNORE INTO bestValGames VALUE(curr_game,curr_critic,curr_price,curr_popularity, curr_playtime, curr_isFave);
+    INSERT IGNORE INTO bestValGames VALUE(curr_game,curr_critic,curr_price,curr_popularity, curr_isFave);
     END LOOP;
     
     
     CLOSE g_cursor;
     
-    SELECT * FROM bestValGames ORDER BY game_name;
+    SELECT * FROM bestValGames LEFT JOIN (SELECT Name AS game_name, AVG(Hours) AS curr_playtime FROM Purchases GROUP BY game_name) AS temp ON (temp.game_name=bestValGames.game_name) ORDER BY bestValGames.game_name;
     
 	END
