@@ -37,41 +37,41 @@
 
   <script>
     async function checkLoginStatus() {
-    const response = await fetch('/check-login-status');
-    const isLoggedIn = await response.json();
+      const response = await fetch('/check-login-status');
+      const isLoggedIn = await response.json();
 
-    const loginButton = document.getElementById('login-button');
-    // const addPcButton = document.getElementById('add-pc-button');
-    if (isLoggedIn) {
-        loginButton.style.display = 'none';
-        // addPcButton.style.display = 'block';
-    } else {
-        loginButton.style.display = 'block';
-        // addPcButton.style.display = 'none';
-    }
+      const loginButton = document.getElementById('login-button');
+      // const addPcButton = document.getElementById('add-pc-button');
+      if (isLoggedIn) {
+          loginButton.style.display = 'none';
+          // addPcButton.style.display = 'block';
+      } else {
+          loginButton.style.display = 'block';
+          // addPcButton.style.display = 'none';
+      }
     }
 
     checkLoginStatus();
 
     async function editUser(row) {
-    const newEmail = prompt('Enter new email:', row.email);
-    const newPassword = prompt('Enter new password:', '');
+      const newEmail = prompt('Enter new email:', row.email);
+      const newPassword = prompt('Enter new password:', '');
 
-    if (newEmail && newPassword) {
-        const response = await fetch('/update-user', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: row.id, email: newEmail, password: newPassword }),
-        });
+      if (newEmail && newPassword) {
+          const response = await fetch('/update-user', {
+              method: 'PUT',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ id: row.id, email: newEmail, password: newPassword }),
+          });
 
-        if (response.ok) {
-            location.reload();
-        } else {
-            alert('Error updating user');
-        }
-    }
+          if (response.ok) {
+              location.reload();
+          } else {
+              alert('Error updating user');
+          }
+      }
     }
 
     async function deleteUser(userId) {
@@ -294,7 +294,7 @@ fetch('/best-value-games')
 </script>
 
 
-    <h1>Users</h1>
+<h1 id="users-header">Users</h1>
     <table id="users-table">
         <thead>
             <tr>
@@ -383,6 +383,21 @@ fetch('/best-value-games')
     .catch(error => {
         console.error('Error fetching data:', error);
     });
+
+    async function checkMaster() {
+      const response = await fetch('/is-user-master');
+      const isMaster = await response.json();
+      console.log(isMaster)
+
+      const usersTable = document.getElementById('users-table');
+      const userHeader = document.getElementById('users-header');
+      if (!isMaster) {
+        usersTable.style.display = 'none';
+        userHeader.style.display = 'none';
+      }
+    }
+
+    checkMaster();
 
   </script>
 </body>

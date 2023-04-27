@@ -211,6 +211,18 @@ app.get('/check-login-status', (req, res) => {
   }
 });
 
+const masters = ["rbhatt06@gmail.com"]
+
+app.get('/is-user-master', (req, res) => {
+  console.log(req.session.user);
+  console.log(req.session.user.email);
+  if (req.session.user.email == masters[0]) {
+    res.json(true);
+  } else {
+    res.json(false);
+  }
+});
+
 // Update user endpoint
 app.put('/update-user', async (req, res) => {
   const { id, email, password } = req.body;
