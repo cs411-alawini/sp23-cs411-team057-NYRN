@@ -24,32 +24,6 @@ app.use(
   })
 );
 
-// Data endpoints
-
-// Creating indexes
-// pool.query('CREATE INDEX idx_games_query_name ON Games(QueryName)', (err, results) => {
-//   if (err) {
-//     console.error('Error creating index:', err);
-//     return;
-//   }
-//   console.log('Index created');
-// });
-
-
-// app.get('/data', (req, res) => {
-//   pool.query(
-//     'SELECT g.QueryName, AVG(r.review_score) AS avg_review_score FROM Games g JOIN Reviews r ON g.QueryName = r.app_name GROUP BY g.QueryID, g.QueryName HAVING AVG(r.review_score) >= 0.75 LIMIT 15;',
-//     (err, results) => {
-//       if (err) {
-//         console.error('Error executing query:', err);
-//         res.status(500).send('Error executing query');
-//         return;
-//       }
-//       res.json(results);
-//     }
-//   );
-// });
-
 let cachedData = null;
 let cacheTimestamp = null;
 const cacheDuration = 48 * 60 * 60 * 1000; // 48h in milliseconds
@@ -64,7 +38,7 @@ app.get('/data', (req, res) => {
 
   pool.query(
     'SELECT g.QueryName, AVG(r.review_score) AS avg_review_score FROM Games g JOIN Reviews r ON g.QueryName = r.app_name GROUP BY g.QueryID, g.QueryName HAVING AVG(r.review_score) >= 0.75 LIMIT 15;',
-    // 'SELECT * from liked LIMIT 15;',
+    // 'SELECT * from likes LIMIT 15;',
     (err, results) => {
       if (err) {
         console.error('Error executing query:', err);
@@ -156,7 +130,7 @@ app.get('/search-games', (req, res) => {
   const keyword = req.query.keyword;
 
   pool.query(
-    "SELECT Name FROM Purchases WHERE Name LIKE CONCAT('%', ?, '%') GROUP BY Name;",
+    "SELECT QueryName FROM Games WHERE QueryName LIKE CONCAT('%', ?, '%') GROUP BY QueryName;",
     [keyword],
     (err, results) => {
         if (err) {
@@ -187,7 +161,7 @@ app.post('/toggle-favorite', async (req, res) => {
   const user_id = req.session.user.id;
 
   pool.query(
-    'SELECT * FROM liked WHERE user_id = ? AND game_id = ?;',
+    'SELECT * FROM likes WHERE user_id = ? AND game_id = ?;',
     [user_id, game_id],
     (err, results) => {
       if (err) {
@@ -199,7 +173,7 @@ app.post('/toggle-favorite', async (req, res) => {
       if (results.length > 0) {
         // Remove the favorite
         pool.query(
-          'DELETE FROM liked WHERE user_id = ? AND game_id = ? ;',
+          'DELETE FROM likes WHERE user_id = ? AND game_id = ? ;',
           [user_id, game_id],
           (err, results) => {
             if (err) {
@@ -213,7 +187,7 @@ app.post('/toggle-favorite', async (req, res) => {
       } else {
         // Add the favorite
         pool.query(
-          'INSERT INTO liked (user_id, game_id) VALUES (?, ?);',
+          'INSERT INTO likes (user_id, game_id) VALUES (?, ?);',
           [user_id, game_id],
           (err, results) => {
             if (err) {
